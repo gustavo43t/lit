@@ -45,6 +45,7 @@ module Lit::CloudTranslation::Providers
   #   end
   class Google < Base
     def translate(text:, from: nil, to:, **opts)
+      byebug
       @client ||=
         # ::Google::Cloud::Translate.new(project_id: config.keyfile_hash['project_id'],
         #                                credentials: config.keyfile_hash)
