@@ -47,7 +47,6 @@ module Lit
     end
 
     def lit_translations_info
-      byebug
       return if Thread.current[:lit_request_keys].nil?
       return unless lit_authorized?
       content_tag :div, class: 'lit-translations-info collapsed' do
