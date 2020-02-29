@@ -41,12 +41,13 @@ module Lit
       return unless lit_authorized?
       meta = content_tag :meta,
                          '',
-                         value: lit.find_localization_localization_keys_path,
+                         value: 'xxxx', #lit.find_localization_localization_keys_path,
                          name: 'lit-url-base'
       safe_join [javascript_lit_tag, stylesheet_lit_tag, meta]
     end
 
     def lit_translations_info
+      byebug
       return if Thread.current[:lit_request_keys].nil?
       return unless lit_authorized?
       content_tag :div, class: 'lit-translations-info collapsed' do
