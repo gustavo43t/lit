@@ -45,17 +45,23 @@ module Lit::CloudTranslation::Providers
   #   end
   class Google < Base
     def translate(text:, from: nil, to:, **opts)
-      byebug
       @client ||=
         # ::Google::Cloud::Translate.new(project_id: config.keyfile_hash['project_id'],
         #                                credentials: config.keyfile_hash)
         ::Google::Cloud::Translate.new
 
-      result = @client.translate_text(sanitize_text(text), from: from, to: to, **opts)
+      # result = @client.translate_text(sanitize_text(text), from: from, to: to, **opts)
+
+      atext = [sanitize_text(text)]
+      parent = "projects/cpobras/locations/global"
+      result = @client.translate_text atext, to, parent, source_language_code: from, mime_type: "text/plain"
+
       unsanitize_text(
         case result
-        when ::Google::Cloud::Translate::Translation then result.text
-        when Array then result.map(&:text)
+        # when ::Google::Cloud::Translate::Translation then result.text
+        when ::Google::Cloud::Translate::V3::TranslateTextResponse then result.translations.first.translated_text
+        # when Array then result.map(&:text)
+        when Array then result.map(&:translations.first.translated_text)
         end
       )
     rescue Signet::AuthorizationError => e
