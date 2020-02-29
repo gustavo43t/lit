@@ -46,8 +46,10 @@ module Lit::CloudTranslation::Providers
   class Google < Base
     def translate(text:, from: nil, to:, **opts)
       @client ||=
-        ::Google::Cloud::Translate.new(project_id: config.keyfile_hash['project_id'],
-                                       credentials: config.keyfile_hash)
+        # ::Google::Cloud::Translate.new(project_id: config.keyfile_hash['project_id'],
+        #                                credentials: config.keyfile_hash)
+        ::Google::Cloud::Translate.new
+
       result = @client.translate(sanitize_text(text), from: from, to: to, **opts)
       unsanitize_text(
         case result
