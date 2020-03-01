@@ -44,7 +44,7 @@ module Lit
             # ...
             key_localizations_per_locale =
               relevant_locales.map { |l| Array.wrap(db_localizations["#{l}.#{key_without_locale}"]) }
-byebug if key_without_locale == 'projetos.inicio'
+# /byebug if key_without_locale == 'projetos.inicio'
             transpose(key_localizations_per_locale).each do |translation_series|
               csv_row = [key_without_locale, *translation_series]
               if include_hits_count
@@ -75,8 +75,9 @@ byebug if key_without_locale == 'projetos.inicio'
     end
 
     # This is like Array#transpose but ignores size differences between inner arrays.
-    private_class_method def self.transpose(matrix)
+    private_class_method def self.transpose(matrix, include_blanks=false)
       maxlen = matrix.max { |x| x.length }.length
+      maxlen = 1 if (maxlen == 0 && include_blanks)
       matrix.each do |array|
         array[maxlen - 1] = nil if array.length < maxlen
       end
