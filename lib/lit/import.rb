@@ -42,6 +42,7 @@ module Lit
     end
 
     def import_csv
+      byebug
       validate_csv
       processed_csv = preprocess_csv
 
