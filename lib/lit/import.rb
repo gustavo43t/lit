@@ -42,7 +42,6 @@ module Lit
     end
 
     def import_csv
-      # byebug
       validate_csv
       processed_csv = preprocess_csv
 
@@ -55,7 +54,6 @@ module Lit
         row_translations.delete nil  # ALguma coluna a ,ais (valores deslocadospra direita)
         row_translations.compact!
         row_translations.each do |locale, value|
-          byebug if locale.nil?
           next unless locale_keys.blank? || locale_keys.map(&:to_sym).include?(locale.to_sym)
           next if value.nil? && skip_nil
           upsert(locale, key, value)

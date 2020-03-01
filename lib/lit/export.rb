@@ -49,10 +49,10 @@ module Lit
 
             key_localizations_per_locale =
               relevant_locales.map { |l| Array.wrap(db_localizations["#{l}.#{key_without_locale}"]) }
- byebug if key_without_locale == 'projetos.inicio'
+
             transpose(key_localizations_per_locale, include_in_blank_translations).each do |translation_series|
               csv_row = [key_without_locale, *translation_series]
- byebug if key_without_locale == 'projetos.inicio'
+
               if include_hits_count
                 csv_row << (Lit.init.cache.get_global_hits_counter(key_without_locale) || 0)
               end

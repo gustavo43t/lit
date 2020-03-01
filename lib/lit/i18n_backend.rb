@@ -65,7 +65,6 @@ module Lit
     end
 
     def lookup(locale, key, scope = [], options = {})
-      # byebug
       init_translations unless initialized?
 
       parts = I18n.normalize_keys(locale, key, scope, options[:separator])
