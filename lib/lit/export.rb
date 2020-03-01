@@ -42,7 +42,7 @@ byebug
             # date.abbr_month_names,Apr
             # date.abbr_month_names,May
             # ...
-
+byebug if key_without_locale == 'projetos.inicio'
             key_localizations_per_locale =
               relevant_locales.map { |l| Array.wrap(db_localizations["#{l}.#{key_without_locale}"]) }
             transpose(key_localizations_per_locale).each do |translation_series|
