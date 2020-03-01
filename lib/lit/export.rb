@@ -42,10 +42,13 @@ module Lit
             # date.abbr_month_names,Apr
             # date.abbr_month_names,May
             # ...
+
+            include_with_all_translations_blanks = true
+
             key_localizations_per_locale =
               relevant_locales.map { |l| Array.wrap(db_localizations["#{l}.#{key_without_locale}"]) }
 # /byebug if key_without_locale == 'projetos.inicio'
-            transpose(key_localizations_per_locale).each do |translation_series|
+            transpose(key_localizations_per_locale, include_with_all_translations_blanks).each do |translation_series|
               csv_row = [key_without_locale, *translation_series]
               if include_hits_count
                 csv_row << (Lit.init.cache.get_global_hits_counter(key_without_locale) || 0)
