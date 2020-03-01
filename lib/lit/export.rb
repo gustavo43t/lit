@@ -83,6 +83,7 @@ module Lit
     # This is like Array#transpose but ignores size differences between inner arrays.
     private_class_method def self.transpose(matrix, include_in_blanks=nil)
       maxlen = matrix.max { |x| x.length }.length
+      maxlen = 1 if (maxlen == 0) && (include_in_blanks == '')
       matrix.each do |array|
         array[maxlen - 1] = include_in_blanks if array.length < maxlen
       end
