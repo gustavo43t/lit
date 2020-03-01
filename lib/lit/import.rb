@@ -49,6 +49,7 @@ module Lit
       processed_csv.each do |row|
         key = row.first
         row_translations = Hash[locales_in_csv.zip(row.drop(1))]
+        row_translations.compact!
         row_translations.each do |locale, value|
           next unless locale_keys.blank? || locale_keys.map(&:to_sym).include?(locale.to_sym)
           next if value.nil? && skip_nil
