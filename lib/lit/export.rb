@@ -25,6 +25,7 @@ module Lit
         CSV.generate do |csv|
           csv << ['key', *relevant_locales, ('hits' if include_hits_count)].compact
           keys_without_locales = db_localizations.keys.map { |k| k.gsub(/(#{relevant_locales.join('|')})\./, '') }.uniq
+byebug
           keys_without_locales.each do |key_without_locale|
             # Here, we need to determine if we're dealing with an array or a scalar.
             # In the former case, for simplicity of editing (which is likely the main
