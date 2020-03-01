@@ -4,7 +4,7 @@ module Lit
   class Export
     def self.call(locale_keys:, format:, include_hits_count: false)
       raise ArgumentError, "format must be yaml or csv" if %i[yaml csv].exclude?(format)
-      byebug
+
       Lit.loader.cache.load_all_translations
       localizations_scope = Lit::Localization.active
       if locale_keys.present?
@@ -25,7 +25,7 @@ module Lit
         CSV.generate do |csv|
           csv << ['key', *relevant_locales, ('hits' if include_hits_count)].compact
           keys_without_locales = db_localizations.keys.map { |k| k.gsub(/(#{relevant_locales.join('|')})\./, '') }.uniq
-byebug
+
           keys_without_locales.each do |key_without_locale|
             # Here, we need to determine if we're dealing with an array or a scalar.
             # In the former case, for simplicity of editing (which is likely the main
@@ -42,10 +42,10 @@ byebug
             # date.abbr_month_names,Apr
             # date.abbr_month_names,May
             # ...
-byebug if key_without_locale == 'projetos.inicio'
             key_localizations_per_locale =
               relevant_locales.map { |l| Array.wrap(db_localizations["#{l}.#{key_without_locale}"]) }
             transpose(key_localizations_per_locale).each do |translation_series|
+byebug if key_without_locale == 'projetos.inicio'
               csv_row = [key_without_locale, *translation_series]
               if include_hits_count
                 csv_row << (Lit.init.cache.get_global_hits_counter(key_without_locale) || 0)
