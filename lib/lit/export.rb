@@ -4,6 +4,7 @@ module Lit
   class Export
     def self.call(locale_keys:, format:, include_hits_count: false)
       raise ArgumentError, "format must be yaml or csv" if %i[yaml csv].exclude?(format)
+      byebug
       Lit.loader.cache.load_all_translations
       localizations_scope = Lit::Localization.active
       if locale_keys.present?
