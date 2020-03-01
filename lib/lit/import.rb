@@ -46,9 +46,13 @@ module Lit
       validate_csv
       processed_csv = preprocess_csv
 
+      nrow = 1
+
       processed_csv.each do |row|
         key = row.first
+        puts "Processing row: #{nrow}: #{key}"
         row_translations = Hash[locales_in_csv.zip(row.drop(1))]
+        row_translations.delete nil  # ALguma coluna a ,ais (valores deslocadospra direita)
         row_translations.compact!
         row_translations.each do |locale, value|
           byebug if locale.nil?
@@ -56,6 +60,7 @@ module Lit
           next if value.nil? && skip_nil
           upsert(locale, key, value)
         end
+        nrow += 1
       end
     rescue CSV::MalformedCSVError => e
       raise ArgumentError, "Invalid CSV file: #{e.message}", cause: e
