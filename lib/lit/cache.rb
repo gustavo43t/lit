@@ -44,9 +44,10 @@ module Lit
       update_locale(key, value, true)
     end
 
-    def has_key?(key)
-      byebug
-      localizations.has_key?(key)
+    def has_key?(key,ret_value=false)
+      has = localizations.has_key?(key)
+      return has if !has || !ret_value
+      return localizations[key]
     end
 
     def sync
