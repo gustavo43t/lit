@@ -45,6 +45,7 @@ module Lit
     end
 
     def has_key?(key)
+      byebug
       localizations.has_key?(key)
     end
 
